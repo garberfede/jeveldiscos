@@ -8,11 +8,17 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <style>
+    .blog-link { text-decoration: none; }
+    .lang-divider { opacity: 0.3; font-size: 0.8rem; }
+  </style>
 </head>
 <body>
 
-  <!-- Language Switcher -->
+  <!-- Nav superior -->
   <div class="lang-switcher">
+    <a href="notas.html" class="lang-btn blog-link">Blog</a>
+    <span class="lang-divider">·</span>
     <button class="lang-btn active" data-lang="es">Español</button>
     <button class="lang-btn" data-lang="pt">Português</button>
     <button class="lang-btn" data-lang="en">English</button>
@@ -63,7 +69,7 @@
              resena_url: la página de la reseña
         ====================================================== -->
         <div class="release-btns"
-             data-hay-resena="false"
+             data-hay-resena="true"
              data-resena-url="resena-mateshpil.html">
           <a href="https://jeveldiscos.bandcamp.com" target="_blank" class="btn-bandcamp">
             <span data-i18n="listenNow">Escuchar ahora</span>
@@ -115,6 +121,13 @@
     <div class="section-ornament">✦</div>
   </section>
 
+  <!-- ÚLTIMAS NOTAS -->
+  <section class="ultimas-notas" id="blog">
+    <div class="section-label">últimas notas</div>
+    <div class="ultimas-notas-lista" id="ultimasNotasLista"></div>
+    <a href="notas.html" class="ultimas-notas-ver">Ver todas las notas <span>→</span></a>
+  </section>
+
   <!-- LINKS -->
   <section class="contact" id="contact">
     <div class="section-label" data-i18n="contactLabel">Links y contacto</div>
@@ -123,11 +136,11 @@
       <div class="contact-links">
         <a href="notas.html" class="contact-item">
           <span class="contact-icon">·</span>
-          <span class="contact-text">Notas</span>
+          <span class="contact-text">Blog</span>
         </a>
-        <a href="mailto:jeveldiscos@gmail.com" class="contact-item">
+        <a href="/cdn-cgi/l/email-protection#52383724373e363b21313d2112353f333b3e7c313d3f" class="contact-item">
           <span class="contact-icon">·</span>
-          <span class="contact-text">jeveldiscos@gmail.com</span>
+          <span class="contact-text"><span class="__cf_email__" data-cfemail="5a303f2c3f363e33293935291a3d373b333674393537">[email&#160;protected]</span></span>
         </a>
         <a href="https://instagram.com/jeveldiscos" target="_blank" class="contact-item" rel="noopener">
           <span class="contact-icon">·</span>
@@ -148,5 +161,38 @@
   </footer>
 
   <script src="script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script>
+    (async () => {
+      const lista = document.getElementById('ultimasNotasLista');
+      if (!lista) return;
+      try {
+        const res = await fetch('notas-data.json');
+        if (!res.ok) throw new Error();
+        const notas = await res.json();
+        const ultimas = notas
+          .sort((a, b) => new Date(b.fecha) - new Date(a.fecha))
+          .slice(0, 3);
+        if (!ultimas.length) { lista.parentElement.style.display = 'none'; return; }
+        lista.innerHTML = ultimas.map(nota => {
+          const fecha = nota.fecha
+            ? new Date(nota.fecha + 'T12:00:00').toLocaleDateString('es-AR', { day: 'numeric', month: 'long', year: 'numeric' })
+            : '';
+          const textoPlano = nota.body
+            ? nota.body.replace(/[#*_`>\[\]]/g, '').trim().slice(0, 120).trim()
+            : '';
+          const preview = textoPlano.length >= 120 ? textoPlano + '…' : textoPlano;
+          return `
+            <a href="notas.html" class="ultima-nota-item">
+              <span class="ultima-nota-fecha">${fecha}</span>
+              <span class="ultima-nota-titulo">${nota.titulo || ''}</span>
+              ${preview ? `<span class="ultima-nota-preview">${preview}</span>` : ''}
+            </a>`;
+        }).join('');
+      } catch (e) {
+        lista.parentElement.style.display = 'none';
+      }
+    })();
+  </script>
 </body>
 </html>
