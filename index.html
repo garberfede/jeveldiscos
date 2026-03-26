@@ -140,7 +140,7 @@
         </a>
         <a href="#" class="contact-item" id="emailLink">
           <span class="contact-icon">·</span>
-          <span class="contact-text">jeveldiscos@gmail.com</span>
+          <span class="contact-text" id="emailText"></span>
         </a>
         <a href="https://instagram.com/jeveldiscos" target="_blank" class="contact-item" rel="noopener">
           <span class="contact-icon">·</span>
@@ -194,10 +194,11 @@
       }
     })();
   </script>  <script>
-    // Armar el email por JS para evitar obfuscación de Cloudflare
     const u = 'jeveldiscos'; const d = 'gmail.com';
     const el = document.getElementById('emailLink');
+    const txt = document.getElementById('emailText');
     if (el) el.href = 'mailto:' + u + '@' + d;
+    if (txt) txt.textContent = u + '@' + d;
   </script>
 </body>
 </html>
