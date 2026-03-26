@@ -138,9 +138,9 @@
           <span class="contact-icon">·</span>
           <span class="contact-text">Blog</span>
         </a>
-        <a href="/cdn-cgi/l/email-protection#52383724373e363b21313d2112353f333b3e7c313d3f" class="contact-item">
+        <a href="#" class="contact-item" id="emailLink">
           <span class="contact-icon">·</span>
-          <span class="contact-text"><span class="__cf_email__" data-cfemail="5a303f2c3f363e33293935291a3d373b333674393537">[email&#160;protected]</span></span>
+          <span class="contact-text">jeveldiscos@gmail.com</span>
         </a>
         <a href="https://instagram.com/jeveldiscos" target="_blank" class="contact-item" rel="noopener">
           <span class="contact-icon">·</span>
@@ -193,6 +193,11 @@
         lista.parentElement.style.display = 'none';
       }
     })();
+  </script>  <script>
+    // Armar el email por JS para evitar obfuscación de Cloudflare
+    const u = 'jeveldiscos'; const d = 'gmail.com';
+    const el = document.getElementById('emailLink');
+    if (el) el.href = 'mailto:' + u + '@' + d;
   </script>
 </body>
 </html>
