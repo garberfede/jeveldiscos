@@ -14,14 +14,6 @@ collections:
     fields:
       - { label: "Título", name: "titulo", widget: "string" }
       - { label: "Fecha", name: "fecha", widget: "datetime", format: "YYYY-MM-DD", date_format: "DD/MM/YYYY", time_format: false }
-      - label: "Tipo"
-        name: "tipo"
-        widget: "select"
-        options:
-          - { label: "Texto", value: "texto" }
-          - { label: "Historieta / Imagen", value: "imagen" }
-          - { label: "Mezcla", value: "mezcla" }
-          - { label: "Link comentado", value: "link" }
       - { label: "Imagen destacada", name: "imagen", widget: "image", required: false }
       - { label: "Contenido", name: "body", widget: "markdown" }
       - { label: "URL del link (solo si es tipo Link)", name: "url_link", widget: "string", required: false }
