@@ -17,7 +17,7 @@
 
   <!-- Nav superior -->
   <div class="lang-switcher">
-    <a href="notas.html" class="lang-btn blog-link">Blog</a>
+    <a href="notas.html" class="lang-btn blog-link" id="blogNavLink">Blog</a>
     <span class="lang-divider">·</span>
     <button class="lang-btn active" data-lang="es">Español</button>
     <button class="lang-btn" data-lang="pt">Português</button>
@@ -69,7 +69,7 @@
              resena_url: la página de la reseña
         ====================================================== -->
         <div class="release-btns"
-             data-hay-resena="false"
+             data-hay-resena="true"
              data-resena-url="resena-mateshpil.html">
           <a href="https://jeveldiscos.bandcamp.com" target="_blank" class="btn-bandcamp">
             <span data-i18n="listenNow">Escuchar ahora</span>
@@ -122,7 +122,7 @@
   </section>
 
   <!-- ÚLTIMAS NOTAS -->
-  <section class="ultimas-notas" id="blog">
+  <section class="ultimas-notas" id="blog" data-activo="false">
     <div class="section-label">últimas notas</div>
     <div class="ultimas-notas-lista" id="ultimasNotasLista"></div>
     <a href="notas.html" class="ultimas-notas-ver">Ver todas las notas <span>→</span></a>
@@ -134,11 +134,11 @@
     <div class="contact-body">
       <img src="vitrola.png" alt="" class="rca-img" />
       <div class="contact-links">
-        <a href="notas.html" class="contact-item">
+        <a href="notas.html" class="contact-item" id="blogContactLink">
           <span class="contact-icon">·</span>
           <span class="contact-text">Blog</span>
         </a>
-        <a href="#" class="contact-item" id="emailLink">
+        <a href="#" class="contact-item" id="emailLink" onclick="var u='jeveldiscos',d='gmail.com';window.location='mailto:'+u+'@'+d;return false;">
           <span class="contact-icon">·</span>
           <span class="contact-text" id="emailText"></span>
         </a>
@@ -199,6 +199,20 @@
     const txt = document.getElementById('emailText');
     if (el) el.href = 'mailto:' + u + '@' + d;
     if (txt) txt.textContent = u + '@' + d;
+  </script>
+  <script>
+    // Blog visibility — cambiá data-activo a "true" en el section#blog para activar
+    const blogSection = document.getElementById('blog');
+    const blogActivo = blogSection && blogSection.dataset.activo === 'true';
+    if (!blogActivo) {
+      if (blogSection) blogSection.style.display = 'none';
+      const navLink = document.getElementById('blogNavLink');
+      if (navLink) navLink.style.display = 'none';
+      const divider = navLink && navLink.nextElementSibling;
+      if (divider && divider.classList.contains('lang-divider')) divider.style.display = 'none';
+      const contactLink = document.getElementById('blogContactLink');
+      if (contactLink) contactLink.style.display = 'none';
+    }
   </script>
 </body>
 </html>
